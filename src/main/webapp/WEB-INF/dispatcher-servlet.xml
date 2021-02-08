@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="controller"></context:component-scan>
+    <context:component-scan base-package="bean"></context:component-scan>
+    <context:component-scan base-package="dao"></context:component-scan>
+
+    <!-- Resolves Views Selected For Rendering by @Controllers to *.jsp Resources in the /WEB-INF/ Folder -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" >
+            <value>/WEB-INF/view/</value>
+        </property>
+        <property name="suffix" >
+            <value>.jsp</value>
+        </property>
+    </bean>
+    <!--userlist download-->
+    <bean id="viewResolver1" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+        <property name="order" value="1"/>
+        <property name="basename" value="pdf"/>
+    </bean>
+
+
+    <!--create db connection-->
+    <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/university?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value=""></property>
+    </bean>
+
+    <bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="ds"></property>
+    </bean>
+
+    <bean id="registerLecDao" class="dao.RegisterLecDao">
+        <property name="template" ref="jt"></property>
+    </bean>
+
+    <bean id="loginDao" class="dao.LoginDao">
+        <property name="template" ref="jt"></property>
+    </bean>
+
+    <bean id="getAllDataDao" class="dao.GetAllDataDao">
+        <property name="template" ref="jt"></property>
+    </bean>
+
+    <bean id="updateDao" class="dao.UpdateDao">
+        <property name="template" ref="jt"></property>
+    </bean>
+
+    <bean id="subjectDao" class="dao.SubjectDao">
+        <property name="template" ref="jt"></property>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5120000"/>
+    </bean>
+</beans>
