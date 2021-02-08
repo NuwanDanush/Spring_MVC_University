@@ -278,13 +278,13 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
-            <a href="#">View Assignment</a>
+            <a href="/stuViewAssList">View Assignment</a>
         </div>
         <button class="dropdown-btn">Marks
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
-            <a href="#">View Marks</a>
+            <a href="##">View Marks</a>
         </div>
         <button class="dropdown-btn">Report
             <i class="fa fa-caret-down"></i>

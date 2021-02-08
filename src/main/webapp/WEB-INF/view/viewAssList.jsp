@@ -138,11 +138,67 @@
                     <td>${assignment.assignment_id}</td>
                     <td>${assignment.getEncode_question().getBytes()}</td>
                     <td>${assignment.year}</td>
-                    <%--<td>--%>
+                    <td>
                         <a href="#">Edit</a>
                         <%--<a href="/deleteUser/${user.user_id}/${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>--%>
                             <%--&lt;%&ndash;<a href="/deleteUser?user_id=${user.user_id},roll = ${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>&ndash;%&gt;--%>
-                    <%--</td>--%>
+                    </td>
+
+                </tr>
+            </c:forEach>
+        </table>
+        <a href="/dashboard" class="btn btn-primary" style="background-color: black; border-color: black; width: 100px" >Cancel</a>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </div>
+    </body>
+</c:if>
+<c:if test="${flag.equals('Student')}">
+    <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Welcome to Student Dashboard</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
+                        class="caret"></span></a>
+                    <ul style="background-color: darkgrey" class="dropdown-menu">
+                        <li><a href="/viewProfile"><b>View Profile</b></a></li>
+                        <li><a href="/editProfile"><b>Edit Profile</b></a></li>
+                        <li><a href="/logout"><b>Logout</b></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h2><center>-----List Of Assignment-----</center></h2>
+
+        <table class="table table-hover">
+
+            <tr>
+                <th>Sub_Name</th>
+                <th>Sub_Code</th>
+                <th>Assignment_ID</th>
+                <th>Question</th>
+                <th>Year</th>
+                <th>Action</th>
+            </tr>
+            <!--set arraylist values in to the table-->
+            <c:forEach items="${assignmentList}" var="assignment" step="1" begin="0">
+                <tr>
+                    <td>${assignment.sub_name}</td>
+                    <td>${assignment.sub_code}</td>
+                    <td>${assignment.assignment_id}</td>
+                    <td>${assignment.encode_question.getBytes()}</td>
+                    <td>${assignment.year}</td>
+                    <td>
+                        <a href="/stuDownloadAssignment/${assignment.encode_question.getBytes()}">Download</a>
+                            <%--<a href="/deleteUser/${user.user_id}/${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>--%>
+                            <%--&lt;%&ndash;<a href="/deleteUser?user_id=${user.user_id},roll = ${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>&ndash;%&gt;--%>
+                    </td>
 
                 </tr>
             </c:forEach>

@@ -2,6 +2,10 @@ package controller;
 
 import bean.AddAssignmentBean;
 import bean.AddSubjectBean;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.SubjectDao;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,6 +24,52 @@ import java.util.List;
 public class SubjectController {
     @Autowired
     SubjectDao subjectDao;
+
+    @RequestMapping(value = "/stuDownloadAssignment/{question}", method = RequestMethod.GET)
+    public void makePDF(@PathVariable String question, HttpServletResponse response) throws Exception {
+        try {
+            System.out.println("---------- "+ question);
+            String value = question;
+            byte[] image = Base64.decodeBase64(value.getBytes());
+
+            Document document = new Document();
+            document.setPageSize(PageSize.LETTER);
+            PdfWriter.getInstance(document, response.getOutputStream());
+
+            Image labelImage = Image.getInstance(image);
+            labelImage.setAlignment(Image.TOP);
+            labelImage.scalePercent(new Float("35"));
+
+            document.open();
+            document.add(labelImage);
+
+            response.setContentType("application/pdf");
+            response.setContentLength(image.length);
+            response.getOutputStream().write(image);
+
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/stuViewAssList")   // Student view assignment list
+    public String stuViewAssList(HttpSession session, Model model){
+        String url = null;
+        try {
+            String regYear = (String) session.getAttribute("reg_year");
+            List<AddAssignmentBean> list = subjectDao.stuGetAssignment(regYear);
+            if (list != null){
+                model.addAttribute("flag", "Student");
+                model.addAttribute("assignmentList", list);
+                url= ("viewAssList");
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return url;
+    }
 
     @GetMapping("/lecViewAssList")   // lecturer view assignment list
     public String lecViewAssList(HttpSession session, Model model){

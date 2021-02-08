@@ -146,4 +146,27 @@ public class SubjectDao {
         }
         return assignment;
     }
+
+    public List<AddAssignmentBean> stuGetAssignment(String regYear) { // Student get his assignment list
+        List<AddAssignmentBean> assignment = null;
+        try {
+            String sql = "SELECT * FROM assignment WHERE year = '"+regYear+"'";
+            assignment = template.query(sql, new RowMapper<AddAssignmentBean>() {
+                @Override
+                public AddAssignmentBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    AddAssignmentBean res = new AddAssignmentBean();
+                    res.setSub_name(rs.getString("sub_name"));
+                    res.setSub_code(rs.getString("sub_code"));
+                    res.setAssignment_id(rs.getString("assignment_id"));
+                    res.setEncode_question(rs.getString("question"));
+                    res.setYear(rs.getString("year"));
+                    return res;
+                }
+            });
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return assignment;
+    }
 }

@@ -114,8 +114,7 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping( value = "/editOtherUser/{user_id}", method = RequestMethod.GET )
-    // edit other user profile data(Admin)
+    @RequestMapping( value = "/editOtherUser/{user_id}", method = RequestMethod.GET )  // edit other user profile data(Admin)
     public String editOtherUser(@PathVariable String user_id, Model model) {
         String url = null;
         try {
