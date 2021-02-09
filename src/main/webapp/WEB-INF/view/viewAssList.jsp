@@ -118,7 +118,7 @@
         </div>
     </nav>
     <div class="container">
-        <h2><center>-----List Of Assignment-----</center></h2>
+        <h2><center>-----List Of Assignment-----</center></h2><br>
 
         <table class="table table-hover">
 
@@ -174,7 +174,7 @@
         </div>
     </nav>
     <div class="container">
-        <h2><center>-----List Of Assignment-----</center></h2>
+        <h2><center>-----List Of Assignment-----</center></h2><br>
 
         <table class="table table-hover">
 
@@ -182,7 +182,6 @@
                 <th>Sub_Name</th>
                 <th>Sub_Code</th>
                 <th>Assignment_ID</th>
-                <th>Question</th>
                 <th>Year</th>
                 <th>Action</th>
             </tr>
@@ -192,10 +191,9 @@
                     <td>${assignment.sub_name}</td>
                     <td>${assignment.sub_code}</td>
                     <td>${assignment.assignment_id}</td>
-                    <td>${assignment.encode_question.getBytes()}</td>
                     <td>${assignment.year}</td>
                     <td>
-                        <a href="/stuDownloadAssignment/${assignment.encode_question.getBytes()}">Download</a>
+                        <a href="/stuDownloadAssignment/${assignment.assignment_id}">Download</a>
                             <%--<a href="/deleteUser/${user.user_id}/${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>--%>
                             <%--&lt;%&ndash;<a href="/deleteUser?user_id=${user.user_id},roll = ${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>&ndash;%&gt;--%>
                     </td>

@@ -206,9 +206,8 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
-            <a href="#">Add Marks</a>
+            <a href="/addMarks">Add Marks</a>
             <a href="#">View Marks</a>
-            <a href="#">Edit Marks</a>
         </div>
         <button class="dropdown-btn">Assignment
             <i class="fa fa-caret-down"></i>

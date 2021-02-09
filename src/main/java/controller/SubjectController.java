@@ -1,11 +1,8 @@
 package controller;
-
 import bean.AddAssignmentBean;
 import bean.AddSubjectBean;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.PdfWriter;
+import bean.MarksBean;
+import com.sun.deploy.net.HttpResponse;
 import dao.SubjectDao;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
@@ -25,31 +22,50 @@ public class SubjectController {
     @Autowired
     SubjectDao subjectDao;
 
-    @RequestMapping(value = "/stuDownloadAssignment/{question}", method = RequestMethod.GET)
-    public void makePDF(@PathVariable String question, HttpServletResponse response) throws Exception {
+    @PostMapping("/submitMarks")        // lecturer submit students marks
+    public String submitMarks(@ModelAttribute ("marks") List<MarksBean> marks, Model model){
+        String url = null;
         try {
-            System.out.println("---------- "+ question);
-            String value = question;
-            byte[] image = Base64.decodeBase64(value.getBytes());
+            System.out.println("==== "+ marks.get(0).getMark());
+            int[] result = subjectDao.submitMarks(marks);
+            if (result != null){
+                model.addAttribute("response", "success");
+                url = ("lecAddMarks");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return url;
+    }
 
-            Document document = new Document();
-            document.setPageSize(PageSize.LETTER);
-            PdfWriter.getInstance(document, response.getOutputStream());
 
-            Image labelImage = Image.getInstance(image);
-            labelImage.setAlignment(Image.TOP);
-            labelImage.scalePercent(new Float("35"));
+    @GetMapping("/addMarks")    // lecturer add final marks
+    public String addMarks(Model model, HttpSession session){
+        String url = null;
+        try {
+            String lec_id = (String) session.getAttribute("user_id");
+            List<MarksBean> stuList = subjectDao.getStudentList(lec_id); //get students for add marks
+            if (stuList != null){
+                model.addAttribute("stuList",stuList);
+                url = ("lecAddMarks");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return url;
+    }
 
-            document.open();
-            document.add(labelImage);
-
+    @RequestMapping(value = "/stuDownloadAssignment/{id}" , method = RequestMethod.GET) // student download assignment
+    public void stuDownloadAssignment(@PathVariable String id, HttpServletResponse response){
+        try {
+            String encodeQuestion = subjectDao.downloadAssignment(id); // get assignment from db where assignment_id = id
             response.setContentType("application/pdf");
-            response.setContentLength(image.length);
-            response.getOutputStream().write(image);
-
-            document.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            response.addHeader("Content-Disposition", "attachment; filename=Assignment.pdf");
+            byte[] file = Base64.decodeBase64(encodeQuestion);
+            response.getOutputStream().write(file);
+            response.getOutputStream().flush();
+        }catch (Exception e){
+            System.out.println(e);
         }
     }
 
@@ -115,7 +131,6 @@ public class SubjectController {
         String encodedString = null;
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append("data:application/pdf;base64,");
             sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(pdfByteArray, false)));
             encodedString = sb.toString();
         } catch (Exception e) {

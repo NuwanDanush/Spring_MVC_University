@@ -119,7 +119,7 @@
         </div>
     </nav>
     <div class="container">
-        <h2><center>-----List Of Subject-----</center></h2>
+        <h2><center>-----List Of Subject-----</center></h2><br>
 
         <form action="#" modelAttribute="searchSubject" method="post">
 
@@ -188,7 +188,7 @@
         </div>
     </nav>
     <div class="container">
-        <h2><center>-----List Of Subject-----</center></h2>
+        <h2><center>-----List Of Subject-----</center></h2><br>
 
         <table class="table table-hover">
 

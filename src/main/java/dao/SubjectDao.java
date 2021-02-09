@@ -2,11 +2,13 @@ package dao;
 
 import bean.AddAssignmentBean;
 import bean.AddSubjectBean;
+import bean.MarksBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectDao {
@@ -168,5 +170,47 @@ public class SubjectDao {
             System.out.println(e);
         }
         return assignment;
+    }
+
+    public List<MarksBean> getStudentList(String lec_id) { // lecturer get his students for add marks
+        List<MarksBean> result = null;
+        try {
+            String sql = "SELECT user.user_id, subject.sub_code FROM user INNER JOIN subject ON user.reg_year = subject.year WHERE subject.lecturer_id = '"+lec_id+"'";
+            result = template.query(sql, new RowMapper<MarksBean>() {
+                @Override
+                public MarksBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    MarksBean res = new MarksBean();
+                    res.setUser_id(rs.getString("user_id"));
+                    res.setSub_code(rs.getString("sub_code"));
+                    return res;
+                }
+            });
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
+    public int[] submitMarks(List<MarksBean> marks) { // lecturer submit final marks
+        System.out.println("+++++ "+ marks.get(0).getMark());
+        int[] result = null;
+        try {
+            String sql = "INSERT INTO marks (user_id, sub_code, mark) VALUES (?, ?, ?)";
+            List<Object[]> userRows = new ArrayList<Object[]>();
+
+            for (MarksBean mark : marks) {
+                userRows.add(new Object[] {mark.getUser_id(), mark.getSub_code(), mark.getMark()});
+            }
+            result = template.batchUpdate(sql, userRows);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
+    public String downloadAssignment(String id) { // Student download assignment
+        String sql = "SELECT question FROM assignment WHERE assignment_id = '"+id+"'";
+        String encodedFile = template.queryForObject(sql,String.class);
+        return encodedFile;
     }
 }
