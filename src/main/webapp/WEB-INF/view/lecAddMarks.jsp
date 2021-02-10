@@ -119,7 +119,7 @@
 <div class="container">
     <h2><center>-----Add Students Marks-----</center></h2><br>
 
-    <form action="/submitMarks" method="post" modelAttribute="marks">
+    <form action="/submitMarks" method="post" modelAttribute="marksForm">
         <table class="table table-hover">
 
             <tr>
@@ -132,7 +132,7 @@
                 <tr>
                     <td> <input type="text"  name="user_id" value="${user.user_id}" readOnly=”true” /></td>
                     <td> <input type="text"  name="sub_code" value="${user.sub_code}" readOnly=”true” /></td>
-                    <td> <input type="text"  name="mark" value="-"/></td>
+                    <td> <input type="text"  name="mark" value=""/></td>
                 </tr>
             </c:forEach>
         </table><br>

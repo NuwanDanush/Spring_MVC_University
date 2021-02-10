@@ -2,7 +2,6 @@ package controller;
 import bean.AddAssignmentBean;
 import bean.AddSubjectBean;
 import bean.MarksBean;
-import com.sun.deploy.net.HttpResponse;
 import dao.SubjectDao;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
@@ -10,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,14 +22,14 @@ public class SubjectController {
     SubjectDao subjectDao;
 
     @PostMapping("/submitMarks")        // lecturer submit students marks
-    public String submitMarks(@ModelAttribute ("marks") List<MarksBean> marks, Model model){
+    public String submitMarks(@ModelAttribute("marksForm") ArrayList<MarksBean> marks, Model model){
         String url = null;
         try {
             System.out.println("==== "+ marks.get(0).getMark());
             int[] result = subjectDao.submitMarks(marks);
             if (result != null){
                 model.addAttribute("response", "success");
-                url = ("lecAddMarks");
+                url = ("dashboard");
             }
         }catch (Exception e){
             System.out.println(e);

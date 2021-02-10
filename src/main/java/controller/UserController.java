@@ -303,10 +303,10 @@ public class UserController {
     }
 
     @PostMapping( "/CheckUserId" ) // check the user id is alredy exsist? using ajax
-    public void CheckUserId(String id, PrintWriter out) {
+    public void CheckUserId(@RequestParam("id") String id, PrintWriter out) {
         try {
             int result = registerLecDao.checkUserId(id);
-            System.out.println("result " + result);
+//            System.out.println("result " + result);
             if (result == 1) {
                 out.println(1); // return response using out.println
             } else {
