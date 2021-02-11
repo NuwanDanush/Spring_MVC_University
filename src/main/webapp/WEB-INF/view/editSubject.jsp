@@ -82,6 +82,27 @@
         </div>
     </div>
 </div>
+<script src="jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //ajax function for check the lecturer already assign subject??
+    $('#Lec_Id').change(function () {
+        var name = $(this).val();
+        var data = "Lec_Id=" + name;
+        $.ajax({
+            url: '/CheckLecturerId',
+            data: data,
+            type: 'post',
+            success: function (response) {
+                if (response == 1) {
+                    alert("Lecturer already assign to the subject!!");
+                    $('#Lec_Id').val('');
+                    $('#Lec_Id').focus();
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
 

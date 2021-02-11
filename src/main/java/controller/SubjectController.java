@@ -37,7 +37,6 @@ public class SubjectController {
         return url;
     }
 
-
     @GetMapping("/addMarks")    // lecturer add final marks
     public String addMarks(Model model, HttpSession session){
         String url = null;
@@ -222,9 +221,36 @@ public class SubjectController {
         }
     }
 
+    @PostMapping( "/CheckLecturerId" ) // check the lecturer is alrady assign for a subject? using ajax
+    public void CheckLecturerId(String Lec_Id, PrintWriter out) {
+        try {
+            int result = subjectDao.CheckLecturerId(Lec_Id);
+            System.out.println("result " + result);
+            if (result == 1) {
+                out.println(1); // return response using out.println
+            } else {
+                out.println(0);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     @GetMapping("/addSubjectForm")// Load the Add Subject form
-    public String addSubjectForm(){
-        System.out.println("addSubjectForm works ");
+    public String addSubjectForm(Model model){
+        String url = null;
+//        try {
+//            List<String> lecList = SubjectDao.getlecList();
+//            if (lecList != null){
+//                model.addAttribute("lecList",lecList);
+//                url = ("addSubject");
+//            }else{
+//                model.addAttribute("error", "true");
+//                url = "addSubject";
+//            }
+//        }catch (Exception e){
+//            System.out.println(e);
+//        }
         return "addSubject";
     }
 

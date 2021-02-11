@@ -5,7 +5,7 @@
   Time: 11:39 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page isELIgnored="false" %>
 
@@ -30,11 +30,12 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <c:if test = "${regToken.equals('Lec')}">  <!--if token == Lec load lecturer register form-->
+                    <c:if test="${regToken.equals('Lec')}"> <!--if token == Lec load lecturer register form-->
                         <h5 class="card-title text-center">Lecturer Register Form</h5>
-                        <form action="/submit" method="post" modelAttribute="registerForm" class="form-signin" onsubmit="return fn()" name="f1">
+                        <form action="/submit" method="post" modelAttribute="registerForm" class="form-signin"
+                              onsubmit="return fn()" name="f1">
 
-                            <%--this is use for display success message, After display success message then auto redirect dashboard.jsp--%>
+                                <%--this is use for display success message, After display success message then auto redirect dashboard.jsp--%>
                             <c:if test="${not empty response}">
                                 <%
                                     out.println("<meta http-equiv='refresh' content='2;URL=/dashboard'>");
@@ -43,7 +44,8 @@
                             </c:if>
 
                             <div class="form-label-group">
-                                <input type="text" id="LfName" class="form-control" placeholder="First Name" name="fname"
+                                <input type="text" id="LfName" class="form-control" placeholder="First Name"
+                                       name="fname"
                                        required autofocus>
                                 <label for="fName">First Name</label>
                             </div>
@@ -62,7 +64,8 @@
                             </div>
 
                             <div class="form-label-group">
-                                <input type="text" id="id" class="form-control" placeholder="Lecturer ID" name="id" required
+                                <input type="text" id="id" class="form-control" placeholder="Lecturer ID" name="id"
+                                       required
                                        autofocus>
                                 <label>Lecturer ID</label>
                             </div>
@@ -76,7 +79,8 @@
                             <br>
 
                             <div class="form-label-group">
-                                <input type="text" id="Lphone" class="form-control" placeholder="Phone Number" name="phone"
+                                <input type="text" id="Lphone" class="form-control" placeholder="Phone Number"
+                                       name="phone"
                                        required autofocus>
                                 <label for="phone">Phone Number</label>
                             </div>
@@ -98,7 +102,8 @@
                                        autofocus>
                             </div>
 
-                            <center><span id="error"></span></center><br>
+                            <center><span id="error"></span></center>
+                            <br>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
                                     style="background-color: black">Submit
                             </button>
@@ -107,9 +112,10 @@
                         <a href="/dashboard" style="background-color: black"
                            class="btn btn-lg btn-primary btn-block text-uppercase">Cancel</a>
                     </c:if>
-                    <c:if test = "${regToken.equals('Stu')}"> <!-- if token == Stu load student register form-->
+                    <c:if test="${regToken.equals('Stu')}"> <!-- if token == Stu load student register form-->
                         <h5 class="card-title text-center">Student Register Form</h5>
-                        <form action="/submit" method="post" modelAttribute="registerForm" class="form-signin" onsubmit="return fn()" name="f1">
+                        <form action="/submit" method="post" modelAttribute="registerForm" class="form-signin"
+                              onsubmit="return fn()" name="f1">
 
                                 <%--this is use for display success message, After display success message then auto redirect dashboard.jsp--%>
                             <c:if test="${not empty response}">
@@ -120,24 +126,37 @@
                             </c:if>
 
                             <div class="form-label-group">
-                                <input type="text" id="fName" class="form-control" placeholder="First Name" name="fname" required autofocus>
-                                <label for="fName" >First Name</label>
-                            </div><br>
+                                <input type="text" id="fName" class="form-control" placeholder="First Name" name="fname"
+                                       required autofocus>
+                                <label for="fName">First Name</label>
+                            </div>
+                            <br>
 
                             <div class="form-label-group">
-                                <input type="text" id="lName" class="form-control" placeholder="Last Name" name="lname" required autofocus>
-                                <label for="lName" >Last Name</label>
-                            </div><br>
+                                <input type="text" id="lName" class="form-control" placeholder="Last Name" name="lname"
+                                       required autofocus>
+                                <label for="lName">Last Name</label>
+                            </div>
+                            <br>
 
                             <div class="form-label-group">
-                                <input type="text" id="id" class="form-control" placeholder="Student ID" name="id" required autofocus>
+                                <input type="text" id="id" class="form-control" placeholder="Student ID" name="id"
+                                       required autofocus>
                                 <label>Student ID</label>
-                            </div><br>
+                            </div>
+                            <br>
 
                             <div class="form-label-group">
-                                <input type="text" id="year" class="form-control" placeholder="Year" name="year" required autofocus>
-                                <label for="year" >Year</label>
-                            </div><br>
+                                <select name="year" id="Year">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd year</option>
+                                    <option value="4">4th Year</option>
+                                </select>
+                                <label>Select Year</label>
+                            </div>
+                            <br>
 
                             <div class="form-label-group">
                                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
@@ -147,25 +166,34 @@
                             <br>
 
                             <div class="form-label-group">
-                                <input type="text" id="phone" class="form-control" placeholder="Phone Number" name="phone" required autofocus>
-                                <label for="phone" >Phone Number</label>
-                            </div><br>
+                                <input type="text" id="phone" class="form-control" placeholder="Phone Number"
+                                       name="phone" required autofocus>
+                                <label for="phone">Phone Number</label>
+                            </div>
+                            <br>
 
                             <div class="form-label-group">
-                                <input type="hidden" id="photo" class="form-control" name="photo" value="abc" required autofocus>
+                                <input type="hidden" id="photo" class="form-control" name="photo" value="abc" required
+                                       autofocus>
                             </div>
 
                             <div class="form-label-group">
-                                <input type="hidden" id="roll" class="form-control" name="roll" value="3" required autofocus>
+                                <input type="hidden" id="roll" class="form-control" name="roll" value="3" required
+                                       autofocus>
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="pw" required>
-                                <label for="inputPassword" >Password</label>
+                                <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                                       name="pw" required>
+                                <label for="inputPassword">Password</label>
                             </div>
 
-                            <center><span id="error"></span></center><br>
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: black">Submit</button><br>
+                            <center><span id="error"></span></center>
+                            <br>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                                    style="background-color: black">Submit
+                            </button>
+                            <br>
                         </form>
                         <a href="/dashboard" style="background-color: black"
                            class="btn btn-lg btn-primary btn-block text-uppercase">Cancel</a>
@@ -203,11 +231,11 @@
     function fn() {
         var phone = f1.phone.value;
         var email = f1.email.value;
-          if (!(ValidateEmail(email))) {
+        if (!(ValidateEmail(email))) {
             error.textContent = "Invalid email";
             error.style.color = "red";
             return false;
-        }else if (!(Validation(phone))) {
+        } else if (!(Validation(phone))) {
             error.textContent = "Invalid phone number";
             error.style.color = "red";
             return false;

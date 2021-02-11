@@ -5,7 +5,7 @@
   Time: 2:30 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page isELIgnored="false" %>
 <html>
@@ -41,23 +41,30 @@
                         </c:if>
 
                         <div class="form-label-group">
-                            <input type="text" id="sub_Name" class="form-control" placeholder="Subject Name" name="sub_name"
+                            <input type="text" id="sub_Name" class="form-control" placeholder="Subject Name"
+                                   name="sub_name"
                                    required autofocus>
                             <label>Subject Name</label>
                         </div>
                         <br>
 
                         <div class="form-label-group">
-                            <input type="text" id="sub_code" class="form-control" placeholder="Subject Code" name="sub_code"
+                            <input type="text" id="sub_code" class="form-control" placeholder="Subject Code"
+                                   name="sub_code"
                                    required autofocus>
                             <label>Subject Code</label>
                         </div>
                         <br>
 
                         <div class="form-label-group">
-                            <input type="text" id="Year" class="form-control" placeholder="Year" name="year" required
-                                   autofocus>
-                            <label>Year</label>
+                            <select name="year" id="cars">
+                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                            <label>Select Year</label>
                         </div>
                         <br>
 
@@ -68,7 +75,8 @@
                         </div>
                         <br>
 
-                        <center><span id="error"></span></center><br>
+                        <center><span id="error"></span></center>
+                        <br>
                         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
                                 style="background-color: black">Submit
                         </button>
@@ -95,11 +103,26 @@
             type: 'post',
             success: function (response) {
                 if (response == 1) {
-//                                        error.textContent = "username already exist!!";
-//                                        error.style.color = "red";
                     alert("Subject ID already exist!!");
                     $('#sub_code').val('');
                     $('#sub_code').focus();
+                }
+            }
+        });
+    });
+    //ajax function for check the lecturer already assign subject??
+    $('#Lec_Id').change(function () {
+        var name = $(this).val();
+        var data = "Lec_Id=" + name;
+        $.ajax({
+            url: '/CheckLecturerId',
+            data: data,
+            type: 'post',
+            success: function (response) {
+                if (response == 1) {
+                    alert("Lecturer already assign to the subject!!");
+                    $('#Lec_Id').val('');
+                    $('#Lec_Id').focus();
                 }
             }
         });

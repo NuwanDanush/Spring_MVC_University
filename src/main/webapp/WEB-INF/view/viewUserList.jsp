@@ -248,7 +248,7 @@
                 <td>${user.roll}</td>
                 <td>
                     <a href="/editOtherUser/${user.user_id}">Edit</a>
-                    <a href="/deleteUser/${user.user_id}/${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                    <%--<a href="/deleteUser/${user.user_id}/${user.roll}" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>--%>
                 </td>
             </tr>
             </c:forEach>

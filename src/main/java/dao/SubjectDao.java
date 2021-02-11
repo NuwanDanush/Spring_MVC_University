@@ -14,6 +14,16 @@ import java.util.List;
 public class SubjectDao {
     private JdbcTemplate template;
 
+//    public static List<String> getlecList() {
+//        List<String> result = null;
+//        try {
+//            String sql = "SELECT user_id FROM user INNER JOIN";
+//        }catch (Exception e){
+//            System.out.println(e);
+//        }
+//        return result;
+//    }
+
     public void setTemplate(JdbcTemplate template) {
         this.template = template;
     }
@@ -212,5 +222,16 @@ public class SubjectDao {
         String sql = "SELECT question FROM assignment WHERE assignment_id = '"+id+"'";
         String encodedFile = template.queryForObject(sql,String.class);
         return encodedFile;
+    }
+
+    public int CheckLecturerId(String lec_id) { //check the lecturer is already assign for a subject
+        int res = 0;
+        try {
+            String sql = "select count(*) from subject where lecturer_id = ?";
+            res = template.queryForObject(sql, new Object[] { lec_id }, Integer.class );
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return res;
     }
 }
