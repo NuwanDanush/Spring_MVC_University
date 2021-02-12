@@ -222,7 +222,7 @@ public class SubjectController {
         }
     }
 
-    @PostMapping( "/CheckLecturerId" ) // check the lecturer is alrady assign for a subject? using ajax
+    @PostMapping( "/CheckLecturerId" ) // check the lecturer is already assign for a subject? using ajax
     public void CheckLecturerId(String Lec_Id, PrintWriter out) {
         try {
             int result = subjectDao.CheckLecturerId(Lec_Id);
@@ -237,12 +237,12 @@ public class SubjectController {
         }
     }
 
-    @GetMapping("/addSubjectForm")// Load the Add Subject form
+    @GetMapping("/addSubjectForm")// Load the Add Subject form with available lecturer list
     public String addSubjectForm(Model model){
         String url = null;
         try {
             List<GetUserBean> lecList = subjectDao.getLecList();
-            if (lecList != null){
+            if (!(lecList.isEmpty())){
                 model.addAttribute("lecList",lecList);
                 url = ("addSubject");
             }else{

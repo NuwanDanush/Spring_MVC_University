@@ -21,7 +21,7 @@ public class SubjectDao {
     public List<GetUserBean> getLecList() { // get lecturer list not assign for a subject
         List<GetUserBean> result = null;
         try {
-            String sql = "SELECT user_id FROM user WHERE user_id NOT IN(SELECT user_id FROM user INNER JOIN subject ON user.user_id = subject.lecturer_id) and user.roll = '2'";
+            String sql = "SELECT user_id FROM user WHERE user_id NOT IN(SELECT user_id FROM user INNER JOIN subject ON user.user_id = subject.lecturer_id) AND user.roll = '2'";
             result = template.query(sql, new RowMapper<GetUserBean>() {
                 @Override
                 public GetUserBean mapRow(ResultSet rs, int rowNum) throws SQLException {

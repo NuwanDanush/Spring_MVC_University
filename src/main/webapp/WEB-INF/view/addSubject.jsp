@@ -39,6 +39,13 @@
                                 out.println("<center><p style='color:green;'><b>Successfully!!!</b></p></center>");
                             %>
                         </c:if>
+                            <%--if their ar no lecturer available show this error msg --%>
+                        <c:if test="${not empty error}">
+                            <%
+                                out.println("<meta http-equiv='refresh' content='2;URL=/dashboard'>");
+                                out.println("<center><p style='color:red;'><b>No lecturer Available!!!</b></p></center>");
+                            %>
+                        </c:if>
 
                         <div class="form-label-group">
                             <input type="text" id="sub_Name" class="form-control" placeholder="Subject Name"
@@ -57,7 +64,7 @@
                         <br>
 
                         <div class="form-label-group">
-                            <select name="year" id="cars">
+                            <select name="year" id="cars" required>
                                 <option value="" selected disabled hidden>Choose here</option>
                                 <option value="1">1st Year</option>
                                 <option value="2">2nd Year</option>
@@ -69,14 +76,15 @@
                         <br>
 
                         <div class="form-label-group">
-                            <select name="lecturer_id" >
+                            <select name="lecturer_id" required>
                                 <option value="" selected disabled hidden>Choose here</option>
                                 <c:forEach items="${lecList}" var="user" step="1" begin="0">
                                     <option value="${user.user_id}">${user.user_id}</option>
                                 </c:forEach>
                             </select>
                             <label>Select Lecturer</label>
-                        </div><br>
+                        </div>
+                        <br>
 
                         <center><span id="error"></span></center>
                         <br>

@@ -49,7 +49,6 @@ public class LoginDao {
         }catch (Exception e){
             System.out.println(e);
         }
-        System.out.println(user.getRoll()+"sssssss"+ result);
         return status;
     }
 }
