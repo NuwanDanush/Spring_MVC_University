@@ -2,6 +2,7 @@ package dao;
 
 import bean.AddAssignmentBean;
 import bean.AddSubjectBean;
+import bean.GetUserBean;
 import bean.MarksBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,20 +14,28 @@ import java.util.List;
 
 public class SubjectDao {
     private JdbcTemplate template;
-
-//    public static List<String> getlecList() {
-//        List<String> result = null;
-//        try {
-//            String sql = "SELECT user_id FROM user INNER JOIN";
-//        }catch (Exception e){
-//            System.out.println(e);
-//        }
-//        return result;
-//    }
-
     public void setTemplate(JdbcTemplate template) {
         this.template = template;
     }
+
+    public List<GetUserBean> getLecList() { // get lecturer list not assign for a subject
+        List<GetUserBean> result = null;
+        try {
+            String sql = "SELECT user_id FROM user WHERE user_id NOT IN(SELECT user_id FROM user INNER JOIN subject ON user.user_id = subject.lecturer_id) and user.roll = '2'";
+            result = template.query(sql, new RowMapper<GetUserBean>() {
+                @Override
+                public GetUserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    GetUserBean res = new GetUserBean();
+                    res.setUser_id(rs.getString("user_id"));
+                    return res;
+                }
+            });
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
 
     public int addSubject(AddSubjectBean addSubject) { //subject add in to the database
         int result = 0;
@@ -75,7 +84,7 @@ public class SubjectDao {
     public int updateSubject(AddSubjectBean subjectData) { // Admin update subject details
         int result = 0;
         try {
-            System.out.println("wwwwwww "+ subjectData.getSub_code());
+//            System.out.println("wwwwwww "+ subjectData.getSub_code());
             String sql = "UPDATE subject SET sub_name = '"+subjectData.getSub_name()+"', year = '"+subjectData.getYear()+"', lecturer_id = '"+subjectData.getLecturer_id()+"' WHERE sub_code = '"+subjectData.getSub_code()+"'";
             result = template.update(sql);
         }catch (Exception e){

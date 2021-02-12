@@ -1,6 +1,7 @@
 package controller;
 import bean.AddAssignmentBean;
 import bean.AddSubjectBean;
+import bean.GetUserBean;
 import bean.MarksBean;
 import dao.SubjectDao;
 import org.apache.commons.codec.binary.Base64;
@@ -239,19 +240,19 @@ public class SubjectController {
     @GetMapping("/addSubjectForm")// Load the Add Subject form
     public String addSubjectForm(Model model){
         String url = null;
-//        try {
-//            List<String> lecList = SubjectDao.getlecList();
-//            if (lecList != null){
-//                model.addAttribute("lecList",lecList);
-//                url = ("addSubject");
-//            }else{
-//                model.addAttribute("error", "true");
-//                url = "addSubject";
-//            }
-//        }catch (Exception e){
-//            System.out.println(e);
-//        }
-        return "addSubject";
+        try {
+            List<GetUserBean> lecList = subjectDao.getLecList();
+            if (lecList != null){
+                model.addAttribute("lecList",lecList);
+                url = ("addSubject");
+            }else{
+                model.addAttribute("error", "true");
+                url = "addSubject";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return url;
     }
 
     @GetMapping("/addAssignmentForm")// Load the Add Assignment form

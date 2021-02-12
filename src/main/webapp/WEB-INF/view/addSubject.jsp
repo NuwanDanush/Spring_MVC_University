@@ -69,11 +69,14 @@
                         <br>
 
                         <div class="form-label-group">
-                            <input type="text" id="Lec_Id" class="form-control" placeholder="Lecturer ID"
-                                   name="lecturer_id" required autofocus>
-                            <label>Lecturer ID</label>
-                        </div>
-                        <br>
+                            <select name="lecturer_id" >
+                                <option value="" selected disabled hidden>Choose here</option>
+                                <c:forEach items="${lecList}" var="user" step="1" begin="0">
+                                    <option value="${user.user_id}">${user.user_id}</option>
+                                </c:forEach>
+                            </select>
+                            <label>Select Lecturer</label>
+                        </div><br>
 
                         <center><span id="error"></span></center>
                         <br>
