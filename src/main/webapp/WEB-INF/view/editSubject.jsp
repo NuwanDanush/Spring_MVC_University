@@ -57,9 +57,14 @@
                         <br>
 
                         <div class="form-label-group">
-                            <input type="text" id="Year" class="form-control" placeholder="Year" name="year" required
-                                   value="${userData.get(0).getYear()}" autofocus>
-                            <label>Year</label>
+                            <select name="year" id="Year" required>
+                                <option value="${userData.get(0).getYear()}" selected disabled hidden>Choose here</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                            <label>Select Year</label>
                         </div>
                         <br>
 

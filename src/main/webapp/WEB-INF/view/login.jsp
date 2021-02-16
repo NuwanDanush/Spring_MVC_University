@@ -16,7 +16,7 @@
     <title>JSP Page</title>
     <style>
         body {
-            background-image: url('https://www.ygfconcierge.com/wp-content/uploads/2016/02/home-page-background-2.jpg');
+            background-image: url('http://erpa.co.in/wp-content/uploads/2017/06/erpa-login-bg.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: 100% 100%;

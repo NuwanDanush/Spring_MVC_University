@@ -44,7 +44,7 @@
                             </c:if>
 
                             <div class="form-label-group">
-                                <input type="text" id="LfName" class="form-control" placeholder="First Name"
+                                <input type="text" id="fName" class="form-control" placeholder="First Name"
                                        name="fname"
                                        required autofocus>
                                 <label for="fName">First Name</label>
@@ -52,7 +52,7 @@
                             <br>
 
                             <div class="form-label-group">
-                                <input type="text" id="LlName" class="form-control" placeholder="Last Name" name="lname"
+                                <input type="text" id="lName" class="form-control" placeholder="Last Name" name="lname"
                                        required autofocus>
                                 <label for="lName">Last Name</label>
                             </div>
@@ -231,7 +231,18 @@
     function fn() {
         var phone = f1.phone.value;
         var email = f1.email.value;
-        if (!(ValidateEmail(email))) {
+        var fname = f1.fName.value;
+        var lname = f1.lName.value;
+        var id = f1.id.value;
+        if (fname == 0 || lname == 0) {
+            error.textContent = "Invalid Name";
+            error.style.color = "red";
+            return false;
+        }else if (id == 0) {
+            error.textContent = "Invalid User ID";
+            error.style.color = "red";
+            return false;
+        } else if (!(ValidateEmail(email))) {
             error.textContent = "Invalid email";
             error.style.color = "red";
             return false;

@@ -19,6 +19,7 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(@ModelAttribute("loginForm")LoginBean loginBean1, HttpSession session, Model model){
         try {
+            loginBean1.setUser_id(loginBean1.getUser_id().trim());
             String hashPw = RegisterController.getHash(loginBean1.getPw()); // pass string password to hashin function in register controller
             loginBean1.setPw(hashPw); // set hash password to LoginBean type object
 

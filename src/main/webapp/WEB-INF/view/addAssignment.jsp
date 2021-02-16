@@ -64,7 +64,7 @@
                         <br>
 
                         <div class="form-label-group">
-                            <select name="year" id="Year">
+                            <select name="year" id="Year" required>
                                 <option value="" selected disabled hidden>Choose here</option>
                                 <option value="1">1st Year</option>
                                 <option value="2">2nd Year</option>

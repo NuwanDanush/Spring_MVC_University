@@ -19,6 +19,9 @@ public class RegisterController {
     @PostMapping( "/submit" )
     public String register(@ModelAttribute( "registerForm" ) RegisterBean reg, Model model) {
         try {
+            reg.setFname(reg.getFname().trim());
+            reg.setLname(reg.getLname().trim());
+            reg.setId(reg.getId().trim());
 
             String hashPw = getHash(reg.getPw()); //string password convert to hash
             reg.setPw(hashPw);                       // set hash password again to regStu object
