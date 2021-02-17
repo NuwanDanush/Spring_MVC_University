@@ -28,6 +28,7 @@ public class LoginController {
                 session.setAttribute("uRoll", user.getRoll());// create session for identify user roll
                 session.setAttribute("user_id",user.getUser_id()); //create session for get logged user details
                 session.setAttribute("reg_year", user.getReg_year() ); // create session for get reg_year
+                session.setAttribute("sessionID", session.getId()); // get session id
                 return ("dashboard");
             }else{
                 System.out.println("username or password invalid");

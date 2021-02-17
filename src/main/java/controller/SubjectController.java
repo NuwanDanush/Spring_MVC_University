@@ -41,12 +41,17 @@ public class SubjectController {
     @GetMapping("/addMarks")    // lecturer add final marks
     public String addMarks(Model model, HttpSession session){
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-            String lec_id = (String) session.getAttribute("user_id");
-            List<MarksBean> stuList = subjectDao.getStudentList(lec_id); //get students for add marks
-            if (stuList != null){
-                model.addAttribute("stuList",stuList);
-                url = ("lecAddMarks");
+            if (sessionID != null){
+                String lec_id = (String) session.getAttribute("user_id");
+                List<MarksBean> stuList = subjectDao.getStudentList(lec_id); //get students for add marks
+                if (stuList != null){
+                    model.addAttribute("stuList",stuList);
+                    url = ("lecAddMarks");
+                }
+            }else {
+                url = "login";
             }
         }catch (Exception e){
             System.out.println(e);
@@ -71,15 +76,19 @@ public class SubjectController {
     @GetMapping("/stuViewAssList")   // Student view assignment list
     public String stuViewAssList(HttpSession session, Model model){
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-            String regYear = (String) session.getAttribute("reg_year");
-            List<AddAssignmentBean> list = subjectDao.stuGetAssignment(regYear);
-            if (list != null){
-                model.addAttribute("flag", "Student");
-                model.addAttribute("assignmentList", list);
-                url= ("viewAssList");
+            if (sessionID != null){
+                String regYear = (String) session.getAttribute("reg_year");
+                List<AddAssignmentBean> list = subjectDao.stuGetAssignment(regYear);
+                if (list != null){
+                    model.addAttribute("flag", "Student");
+                    model.addAttribute("assignmentList", list);
+                    url= ("viewAssList");
+                }
+            }else {
+                url = "login";
             }
-
         }catch (Exception e){
             System.out.println(e);
         }
@@ -89,15 +98,19 @@ public class SubjectController {
     @GetMapping("/lecViewAssList")   // lecturer view assignment list
     public String lecViewAssList(HttpSession session, Model model){
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-            String lecID = (String) session.getAttribute("user_id");
-            List<AddAssignmentBean> list = subjectDao.lecGetAssignment(lecID);
-            if (list != null){
-                model.addAttribute("flag", "Lecturer");
-                model.addAttribute("assignmentList", list);
-                url= ("viewAssList");
+            if (sessionID != null){
+                String lecID = (String) session.getAttribute("user_id");
+                List<AddAssignmentBean> list = subjectDao.lecGetAssignment(lecID);
+                if (list != null){
+                    model.addAttribute("flag", "Lecturer");
+                    model.addAttribute("assignmentList", list);
+                    url= ("viewAssList");
+                }
+            }else {
+                url = "login";
             }
-
         }catch (Exception e){
             System.out.println(e);
         }
@@ -141,14 +154,18 @@ public class SubjectController {
     @GetMapping("/stuViewSubjects") // Student view his all subject details
     public String stuViewSubjects(HttpSession session, Model model){
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-//            String user_id = (String) session.getAttribute("user_id"); // logged student user id
-            String reg_year = (String) session.getAttribute("reg_year");
-            List<AddSubjectBean> subjects = subjectDao.stuGetSubjects(reg_year);
-            if (subjects != null){
-                model.addAttribute("subjects", subjects);
-                model.addAttribute("flag", "stuViewSubjects");
-                url = ("viewSubjectList");
+            if (sessionID != null){
+                String reg_year = (String) session.getAttribute("reg_year");
+                List<AddSubjectBean> subjects = subjectDao.stuGetSubjects(reg_year);
+                if (subjects != null){
+                    model.addAttribute("subjects", subjects);
+                    model.addAttribute("flag", "stuViewSubjects");
+                    url = ("viewSubjectList");
+                }
+            }else {
+                url = "login";
             }
         }catch (Exception e){
             System.out.println(e);
@@ -192,14 +209,19 @@ public class SubjectController {
     }
 
     @GetMapping("/viewSubject")
-    public String viewSubject(Model model){ //Admin view all subjects function
+    public String viewSubject(Model model, HttpSession session){ //Admin view all subjects function
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-            List<AddSubjectBean> result = subjectDao.getSubjectDetails();
-            if (result != null){
-                model.addAttribute("flag", "adminViewAll");
-                model.addAttribute("subList", result);
-                url = ("viewSubjectList");
+            if (sessionID != null){
+                List<AddSubjectBean> result = subjectDao.getSubjectDetails();
+                if (result != null){
+                    model.addAttribute("flag", "adminViewAll");
+                    model.addAttribute("subList", result);
+                    url = ("viewSubjectList");
+                }
+            }else {
+                url = "login";
             }
         }catch (Exception e){
             System.out.println(e);
@@ -238,16 +260,21 @@ public class SubjectController {
     }
 
     @GetMapping("/addSubjectForm")// Load the Add Subject form with available lecturer list
-    public String addSubjectForm(Model model){
+    public String addSubjectForm(Model model, HttpSession session){
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-            List<GetUserBean> lecList = subjectDao.getLecList();
-            if (!(lecList.isEmpty())){
-                model.addAttribute("lecList",lecList);
-                url = ("addSubject");
-            }else{
-                model.addAttribute("error", "true");
-                url = "addSubject";
+            if (sessionID != null){
+                List<GetUserBean> lecList = subjectDao.getLecList();
+                if (!(lecList.isEmpty())){
+                    model.addAttribute("lecList",lecList);
+                    url = ("addSubject");
+                }else{
+                    model.addAttribute("error", "true");
+                    url = "addSubject";
+                }
+            }else {
+                url = "login";
             }
         }catch (Exception e){
             System.out.println(e);
@@ -261,16 +288,21 @@ public class SubjectController {
     }
 
     @PostMapping("/addSubject") // this is subject add function
-    public String addSubject(@ModelAttribute ("addSubject") AddSubjectBean addSubject, Model model){
+    public String addSubject(@ModelAttribute ("addSubject") AddSubjectBean addSubject, HttpSession session, Model model){
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
         try {
-            System.out.println(addSubject.getLecturer_id());
-            int result = subjectDao.addSubject(addSubject);
-            if (result == 1){
-                model.addAttribute("added", "success");
-                url = ("addSubject");
-            }else{
-                System.out.println("Subject add error!");
+            if (sessionID != null){
+                System.out.println(addSubject.getLecturer_id());
+                int result = subjectDao.addSubject(addSubject);
+                if (result == 1){
+                    model.addAttribute("added", "success");
+                    url = ("addSubject");
+                }else{
+                    System.out.println("Subject add error!");
+                }
+            }else {
+                url = "login";
             }
         }catch (Exception e){
             System.out.println(e);
