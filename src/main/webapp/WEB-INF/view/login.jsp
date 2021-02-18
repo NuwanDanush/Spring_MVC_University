@@ -56,5 +56,15 @@
         </div>
     </div>
 </div>
+<script src="jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //kill all back button functionality
+    function noBack() { window.history.forward() }
+    noBack();
+    window.onload = noBack;
+    window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+    window.onunload = function() { void (0) }
+</script>
 </body>
 </html>

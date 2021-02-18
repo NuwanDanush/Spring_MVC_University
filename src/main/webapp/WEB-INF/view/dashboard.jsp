@@ -5,7 +5,7 @@
   Time: 11:39 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page isELIgnored="false" %>
 <%
@@ -103,217 +103,219 @@
         }
     </style>
 </head>
-<% if (uRoll.equals("1")){%>
-    <body >
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Welcome to Admin Dashboard</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
-                        class="caret"></span></a>
-                    <ul style="background-color: darkgrey" class="dropdown-menu">
-                        <li><a href="/viewProfile"><b>View Profile</b></a></li>
-                        <li><a href="/editProfile"><b>Edit Profile</b></a></li>
-                        <li><a href="/logout"><b>Logout</b></a></li>
-                    </ul>
-                </li>
-            </ul>
+<% if (uRoll.equals("1")) {%>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Welcome to Admin Dashboard</a>
         </div>
-    </nav>
-
-    <div class="sidenav">
-        <button class="dropdown-btn">Student
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/registerStu">Add Student</a>
-            <a href="/viewStudent">View Student</a>
-        </div>
-        <button class="dropdown-btn">Lecturer
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/registerLec">Add Lecturer</a>
-            <a href="/viewLecturer">View Lecturer</a>
-        </div>
-        <button class="dropdown-btn">Subject
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/addSubjectForm">Add Subject</a>
-            <a href="/viewSubject">View Subject</a>
-        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
+                    class="caret"></span></a>
+                <ul style="background-color: darkgrey" class="dropdown-menu">
+                    <li><a href="/viewProfile"><b>View Profile</b></a></li>
+                    <li><a href="/editProfile"><b>Edit Profile</b></a></li>
+                    <li><a href="/logout"><b>Logout</b></a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    <div class="main">
-        <h2>Hello User!!</h2>
-        <p>Click on the dropdown button to open the dropdown menu inside the side navigation.</p>
-        <p>Some random text..</p>
-    </div>
-    <script>
-        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-        var dropdown = document.getElementsByClassName("dropdown-btn");
-        var i;
+</nav>
 
-        for (i = 0; i < dropdown.length; i++) {
-            dropdown[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var dropdownContent = this.nextElementSibling;
-                if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                } else {
-                    dropdownContent.style.display = "block";
-                }
-            });
-        }
-    </script>
-    </body>
-<%} else if (uRoll.equals("2")){%>
-    <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Welcome to Lecturer Dashboard</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
-                        class="caret"></span></a>
-                    <ul style="background-color: darkgrey" class="dropdown-menu">
-                        <li><a href="/viewProfile"><b>View Profile</b></a></li>
-                        <li><a href="/editProfile"><b>Edit Profile</b></a></li>
-                        <li><a href="/logout"><b>Logout</b></a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="sidenav">
-        <button class="dropdown-btn">Student
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/lecViewStuList">View Student</a>
-        </div>
-        <button class="dropdown-btn">Subject
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="#">Time Table</a>
-        </div>
-        <button class="dropdown-btn">Marks
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/addMarks">Add Marks</a>
-            <a href="#">View Marks</a>
-        </div>
-        <button class="dropdown-btn">Assignment
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/addAssignmentForm">Add Assignment</a>
-            <a href="/lecViewAssList">View Assignment</a>
-        </div>
-        <button class="dropdown-btn">Report
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="#">Download</a>
-        </div>
+<div class="sidenav">
+    <button class="dropdown-btn">Student
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/registerStu">Add Student</a>
+        <a href="/viewStudent">View Student</a>
     </div>
-    <div class="main">
-        <h2>Hello User!!</h2>
-        <p>Click on the dropdown button to open the dropdown menu inside the side navigation.</p>
-        <p>Some random text..</p>
+    <button class="dropdown-btn">Lecturer
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/registerLec">Add Lecturer</a>
+        <a href="/viewLecturer">View Lecturer</a>
     </div>
-    <script>
-        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-        var dropdown = document.getElementsByClassName("dropdown-btn");
-        var i;
-
-        for (i = 0; i < dropdown.length; i++) {
-            dropdown[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var dropdownContent = this.nextElementSibling;
-                if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                } else {
-                    dropdownContent.style.display = "block";
-                }
-            });
-        }
-    </script>
-    </body>
-<%} else if (uRoll.equals("3")){%>
-    <body >
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Welcome to Student Dashboard</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
-                        class="caret"></span></a>
-                    <ul style="background-color: darkgrey" class="dropdown-menu">
-                        <li><a href="/viewProfile"><b>View Profile</b></a></li>
-                        <li><a href="/editProfile"><b>Edit Profile</b></a></li>
-                        <li><a href="/logout"><b>Logout</b></a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="sidenav">
-        <button class="dropdown-btn">Subject
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/stuViewSubjects">View Subject</a>
-        </div>
-        <button class="dropdown-btn">Assignment
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="/stuViewAssList">View Assignment</a>
-        </div>
-        <button class="dropdown-btn">Marks
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="##">View Marks</a>
-        </div>
-        <button class="dropdown-btn">Report
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="#">Download</a>
-        </div>
+    <button class="dropdown-btn">Subject
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/addSubjectForm">Add Subject</a>
+        <a href="/viewSubject">View Subject</a>
     </div>
-    <div class="main">
-        <h2>Hello User!!</h2>
-        <p>Click on the dropdown button to open the dropdown menu inside the side navigation.</p>
-        <p>Some random text..</p>
-    </div>
-    <script>
-        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-        var dropdown = document.getElementsByClassName("dropdown-btn");
-        var i;
+</div>
+<div class="main">
+    <h2>Hello User!!</h2>
+    <p>Click on the dropdown button to open the dropdown menu inside the side navigation.</p>
+    <p>Some random text..</p>
+</div>
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
 
-        for (i = 0; i < dropdown.length; i++) {
-            dropdown[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var dropdownContent = this.nextElementSibling;
-                if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                } else {
-                    dropdownContent.style.display = "block";
-                }
-            });
-        }
-    </script>
-    </body>
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
+<%} else if (uRoll.equals("2")) {%>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Welcome to Lecturer Dashboard</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
+                    class="caret"></span></a>
+                <ul style="background-color: darkgrey" class="dropdown-menu">
+                    <li><a href="/viewProfile"><b>View Profile</b></a></li>
+                    <li><a href="/editProfile"><b>Edit Profile</b></a></li>
+                    <li><a href="/logout"><b>Logout</b></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="sidenav">
+    <button class="dropdown-btn">Student
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/lecViewStuList">View Student</a>
+    </div>
+    <button class="dropdown-btn">Subject
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="#">Time Table</a>
+    </div>
+    <button class="dropdown-btn">Marks
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/addMarks">Add Marks</a>
+        <a href="#">View Marks</a>
+    </div>
+    <button class="dropdown-btn">Assignment
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/addAssignmentForm">Add Assignment</a>
+        <a href="/lecViewAssList">View Assignment</a>
+    </div>
+    <button class="dropdown-btn">Report
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="#">Download</a>
+    </div>
+</div>
+<div class="main">
+    <h2>Hello User!!</h2>
+    <p>Click on the dropdown button to open the dropdown menu inside the side navigation.</p>
+    <p>Some random text..</p>
+</div>
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
+<%} else if (uRoll.equals("3")) {%>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Welcome to Student Dashboard</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b>PROFILE</b><span
+                    class="caret"></span></a>
+                <ul style="background-color: darkgrey" class="dropdown-menu">
+                    <li><a href="/viewProfile"><b>View Profile</b></a></li>
+                    <li><a href="/editProfile"><b>Edit Profile</b></a></li>
+                    <li><a href="/logout"><b>Logout</b></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="sidenav">
+    <button class="dropdown-btn">Subject
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/stuViewSubjects">View Subject</a>
+    </div>
+    <button class="dropdown-btn">Assignment
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="/stuViewAssList">View Assignment</a>
+    </div>
+    <button class="dropdown-btn">Marks
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="##">View Marks</a>
+    </div>
+    <button class="dropdown-btn">Report
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+        <a href="#">Download</a>
+    </div>
+</div>
+<div class="main">
+    <h2>Hello User!!</h2>
+    <p>Click on the dropdown button to open the dropdown menu inside the side navigation.</p>
+    <p>Some random text..</p>
+</div>
+<script src="jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
 <%}%>
 </html>

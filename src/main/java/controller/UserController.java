@@ -29,8 +29,9 @@ public class UserController {
     public String lecViewStuList(HttpSession session, Model model){ // Lecturer view his student
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("2")){
                 String user_id = (String) session.getAttribute("user_id"); // Logged lecturer Id get from session
                 List<GetUserBean> students = getAllDataDao.lecGetStuList(user_id);
                 if (students != null){
@@ -48,11 +49,12 @@ public class UserController {
     }
 
     @PostMapping("/searchStu")
-    public String searchStu(@ModelAttribute("searchName") GetUserBean name, HttpSession session, Model model){ // student search function
+    public String searchStu(@ModelAttribute("searchName") GetUserBean name, HttpSession session, Model model){ // Admin student search function
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 System.out.println("search name = "+name.getFname());
                 List<GetUserBean> users = getAllDataDao.searchStu(name.getFname());
                 System.out.println("user list ==== "+users);
@@ -78,8 +80,9 @@ public class UserController {
     public String searchLec(@ModelAttribute("searchName") GetUserBean name, Model model, HttpSession session){ // Lecturer search function
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 System.out.println("search name = "+name.getFname());
                 List<GetUserBean> users = getAllDataDao.searchLec(name.getFname());
                 System.out.println("user list ==== "+users);
@@ -129,8 +132,9 @@ public class UserController {
     public String editOtherUser(@PathVariable String user_id, Model model, HttpSession session) {
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 List<GetUserBean> result = getAllDataDao.getAllData(user_id); //get all data and assign it result
                 if (result != null) {
                     model.addAttribute("userData", result);
@@ -170,7 +174,7 @@ public class UserController {
     }
 
 
-    @RequestMapping( value = "/deleteUser/{user_id}/{roll}", method = RequestMethod.GET ) //user delete function
+    @RequestMapping( value = "/deleteUser/{user_id}/{roll}", method = RequestMethod.GET ) // Admin user delete function
     public String delete(@PathVariable String user_id, @PathVariable String roll, Model model) {
         String url = null;
         try {
@@ -202,8 +206,9 @@ public class UserController {
     public String viewStudent(HttpSession session, Model model) {
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 List<GetUserBean> result = getAllDataDao.getAllStudent();
                 if (result != null) {
                     model.addAttribute("stuList", result);
@@ -226,8 +231,9 @@ public class UserController {
     public String viewLecturer(HttpSession session, Model model) {
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 List<GetUserBean> result = getAllDataDao.getAllLecturer();
                 if (result != null) {
                     model.addAttribute("lecList", result);
@@ -251,7 +257,6 @@ public class UserController {
         String url = null;
         try {
             String user_id = (String) session.getAttribute("user_id");
-//            System.out.println("------------------------: " + updateData.getPhoto());
 
             String encodeImage = this.encodeToString(updateData.getPhoto().getBytes());
             updateData.setEncode_photo(encodeImage); // set base64 String to GetUserBean object
@@ -286,7 +291,7 @@ public class UserController {
     }
 
     @GetMapping( "/editProfile" )
-    // if user click edit profile this method is run, return user datails to the editProfile.jsp
+    // if user click edit profile this method is run, return user details to the editProfile.jsp
     public String editProfile(HttpSession session, Model model) {
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
@@ -365,12 +370,13 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping( "/registerLec" )
+    @GetMapping( "/registerLec" ) // Admin register a lecturer
     public String registerLec(HttpSession session, Model model) {
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 model.addAttribute("regToken", "Lec"); //If request lecturer register form set token Lec
                 url = "register";
             }else {
@@ -382,12 +388,13 @@ public class UserController {
         return  url;
     }
 
-    @GetMapping( "/registerStu" )
+    @GetMapping( "/registerStu" ) // Admin register a student
     public String registerStu(HttpSession session, Model model) {
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 model.addAttribute("regToken", "Stu");  // If request student register form set token Stu
                 url = "register";
             }else {

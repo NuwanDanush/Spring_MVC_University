@@ -26,7 +26,6 @@ public class SubjectController {
     public String submitMarks(@ModelAttribute("marksForm") ArrayList<MarksBean> marks, Model model){
         String url = null;
         try {
-            System.out.println("==== "+ marks.get(0).getMark());
             int[] result = subjectDao.submitMarks(marks);
             if (result != null){
                 model.addAttribute("response", "success");
@@ -42,8 +41,9 @@ public class SubjectController {
     public String addMarks(Model model, HttpSession session){
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("2")){
                 String lec_id = (String) session.getAttribute("user_id");
                 List<MarksBean> stuList = subjectDao.getStudentList(lec_id); //get students for add marks
                 if (stuList != null){
@@ -77,8 +77,9 @@ public class SubjectController {
     public String stuViewAssList(HttpSession session, Model model){
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("3")){
                 String regYear = (String) session.getAttribute("reg_year");
                 List<AddAssignmentBean> list = subjectDao.stuGetAssignment(regYear);
                 if (list != null){
@@ -99,8 +100,9 @@ public class SubjectController {
     public String lecViewAssList(HttpSession session, Model model){
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("2")){
                 String lecID = (String) session.getAttribute("user_id");
                 List<AddAssignmentBean> list = subjectDao.lecGetAssignment(lecID);
                 if (list != null){
@@ -122,7 +124,6 @@ public class SubjectController {
         String url = null;
         try {
             String encode_pdf = this.encodeToString(addAssignmentBean.getQuestion().getBytes()); // pass multipart type pdf to convert base64
-//            System.out.println("encode pdf = "+ encode_pdf);
             addAssignmentBean.setEncode_question(encode_pdf); // set again base64 type pdf to bean object
             int result = subjectDao.addAssignment(addAssignmentBean);
 
@@ -155,8 +156,9 @@ public class SubjectController {
     public String stuViewSubjects(HttpSession session, Model model){
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("3")){
                 String reg_year = (String) session.getAttribute("reg_year");
                 List<AddSubjectBean> subjects = subjectDao.stuGetSubjects(reg_year);
                 if (subjects != null){
@@ -173,17 +175,23 @@ public class SubjectController {
         return url;
     }
 
-    @RequestMapping( value = "/editSubjectDetails/{sub_code}", method = RequestMethod.GET )
-    public String editSubjectDetails(@PathVariable String sub_code, Model model) { // get a subject details to edit form
+    @RequestMapping( value = "/editSubjectDetails/{sub_code}", method = RequestMethod.GET ) // Admin edit subjects
+    public String editSubjectDetails(@PathVariable String sub_code, Model model, HttpSession session) { // get a subject details to edit form
         String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            List<AddSubjectBean> result = subjectDao.getOneSubject(sub_code);
-            if (result != null) {
-                model.addAttribute("userData", result);
-                url = "editSubject";
-            } else {
-                System.out.println("result is null");
-                url = "dashboard";
+            if (sessionID != null && uRoll.equals("1")){
+                List<AddSubjectBean> result = subjectDao.getOneSubject(sub_code);
+                if (result != null) {
+                    model.addAttribute("userData", result);
+                    url = "editSubject";
+                } else {
+                    System.out.println("result is null");
+                    url = "dashboard";
+                }
+            }else {
+                url = "login";
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -191,7 +199,7 @@ public class SubjectController {
         return url;
     }
 
-    @PostMapping("/updateSubject")
+    @PostMapping("/updateSubject") // This method call when admin submit updateSubjectForm
     public String updateSubject(@ModelAttribute("updateSubjectForm") AddSubjectBean subjectData, Model model){  // Admin update subject details
         String url = null;
         try {
@@ -212,8 +220,9 @@ public class SubjectController {
     public String viewSubject(Model model, HttpSession session){ //Admin view all subjects function
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 List<AddSubjectBean> result = subjectDao.getSubjectDetails();
                 if (result != null){
                     model.addAttribute("flag", "adminViewAll");
@@ -259,12 +268,13 @@ public class SubjectController {
         }
     }
 
-    @GetMapping("/addSubjectForm")// Load the Add Subject form with available lecturer list
+    @GetMapping("/addSubjectForm")//Admin load the Add Subject form with available lecturer list
     public String addSubjectForm(Model model, HttpSession session){
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
         try {
-            if (sessionID != null){
+            if (sessionID != null && uRoll.equals("1")){
                 List<GetUserBean> lecList = subjectDao.getLecList();
                 if (!(lecList.isEmpty())){
                     model.addAttribute("lecList",lecList);
@@ -282,12 +292,24 @@ public class SubjectController {
         return url;
     }
 
-    @GetMapping("/addAssignmentForm")// Load the Add Assignment form
-    public String addAssignmentForm(){
-        return "addAssignment";
+    @GetMapping("/addAssignmentForm")// Lecturer load the Add Assignment form
+    public String addAssignmentForm(HttpSession session){
+        String url = null;
+        String sessionID = (String) session.getAttribute("sessionID");
+        String uRoll = (String) session.getAttribute("uRoll");
+        try {
+            if (sessionID != null && uRoll.equals("2")){
+                url = "addAssignment";
+            }else {
+                url = "login";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return url;
     }
 
-    @PostMapping("/addSubject") // this is subject add function
+    @PostMapping("/addSubject") // this method call when admin submit subject details
     public String addSubject(@ModelAttribute ("addSubject") AddSubjectBean addSubject, HttpSession session, Model model){
         String url = null;
         String sessionID = (String) session.getAttribute("sessionID");
